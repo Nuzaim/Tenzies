@@ -5,6 +5,7 @@
 body {
     background: #0B2434;
     overflow-y: hidden;
+    margin: 0;
 }
 
 .main{
@@ -87,4 +88,31 @@ button{
 
 button:focus{
     outline:none;
+}
+
+@media(max-width: 600px){
+    .main{
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        border-radius: 0;
+    }
+    button{
+        aspect-ratio: 5/1;
+    }
+}
+
+@media(max-width: 450px){
+    .die{
+        width: 60px;
+        height: 60px;
+    }
+    h2{
+        font-size: 1.8rem;
+        margin: 20%;
+    }
+    button{ 
+        width: 80%;
+        aspect-ratio: 6/1;
+    }
 }
