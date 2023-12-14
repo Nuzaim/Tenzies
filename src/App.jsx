@@ -36,6 +36,10 @@ export default function App() {
         }))
     }
 
+    function themeSelect() {
+        setTheme(prevState => !prevState)
+    }
+
     const [tenzies, setTenzies] = React.useState(false)
 
     const [numRolls, setNumRolls] = React.useState(0)
@@ -44,12 +48,15 @@ export default function App() {
 
     const [best, setBest] = React.useState(localStorage.getItem("totalRolls") || false)
 
+    const [theme, setTheme] = React.useState(false)
+
     const die = dieNum.map(dice =>
         <Die
             id={dice.id}
             isHeld={dice.isHeld}
             value={dice.value}
             holdDice={() => holdDice(dice.id)}
+            theme={theme}
         />)
 
     React.useEffect(
@@ -67,8 +74,11 @@ export default function App() {
     )
 
     return (
-        <div className="main">
-            {tenzies && <Confetti />}
+        <div className={theme ? "theme-dark main" : "main"}>
+            {tenzies && <Confetti style={{ position: "fixed" }} />}
+            <button className={"theme"} onClick={themeSelect}>
+                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M448 256c0-106-86-192-192-192V448c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z" /></svg>
+            </button>
             <div className="center">
                 <h1>Tenzies</h1>
                 <p className="game_details">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
@@ -76,7 +86,7 @@ export default function App() {
             <div className="container">
                 {die}
             </div>
-            <button onClick={tenzies ? newGame : roll}>{tenzies ? "New Game" : "Roll"}</button>
+            <button onClick={tenzies ? newGame : roll} className={theme ? "theme-dark" : ""} >{tenzies ? "New Game" : "Roll"}</button>
             <p class="rolls">{`Best : ${best ? best : "None"}`}<br /> {tenzies && `Total number of rolls took:${numRolls}`}</p>
         </div>
     )
